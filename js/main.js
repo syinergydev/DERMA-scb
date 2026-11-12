@@ -25,7 +25,7 @@
   // Galeri: filter + lightbox
   const figs = $$(".masonry figure");
   if (figs.length) {
-    const chips = $$(".filters button");
+    const chips = $$(".gfilters button, .filters button");
     chips.forEach(b => b.addEventListener("click", () => {
       chips.forEach(c => c.setAttribute("aria-pressed", String(c === b)));
       const cat = b.dataset.cat;
@@ -94,4 +94,14 @@
       });
     }
   }
+})();
+(function(){
+  // Lightbox: geser (swipe) di HP
+  const lb=document.getElementById('lb'); if(!lb) return;
+  let x0=null;
+  lb.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',e=>{
+    if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>50){ (dx<0?lb.querySelector('.n'):lb.querySelector('.p')).click(); }
+  });
 })();
